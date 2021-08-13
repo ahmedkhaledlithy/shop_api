@@ -1,3 +1,4 @@
+import 'package:dsc_shop/controllers/product_api.dart';
 import 'package:dsc_shop/controllers/bottom_nav_provider.dart';
 import 'package:dsc_shop/controllers/progress.dart';
 import 'package:dsc_shop/views/splash.dart';
@@ -13,6 +14,7 @@ void main() async {
     ChangeNotifierProvider(create: (BuildContext context)=>AuthProvider()),
     ChangeNotifierProvider(create: (BuildContext context)=>PrograssHud()),
     ChangeNotifierProvider(create: (BuildContext context)=>BottomProvider()),
+    ChangeNotifierProvider(create: (BuildContext context)=>ProductsApi()),
   ],
   child: MyApp()));
 }

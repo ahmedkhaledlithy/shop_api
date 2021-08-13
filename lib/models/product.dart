@@ -1,32 +1,43 @@
-import 'package:cloud_firestore/cloud_firestore.dart';
 
-class Product{
-  int id;
-  String title;
-  double price;
-  String description;
-  String category;
-  String imageUrl;
+class Product {
+  num? _id;
+  String? _title;
+  double? _price;
+  String? _description;
+  String? _category;
+  String? _image;
+
+  num? get id => _id;
+  String? get title => _title;
+  double? get price => _price;
+  String? get description => _description;
+  String? get category => _category;
+  String? get image => _image;
+
 
   Product({
-    required this.id,
-    required this.title,
-    required this.price,
-    required this.description,
-    required this.category,
-    required this.imageUrl});
+    int? id,
+    String? title,
+    double? price,
+    String? description,
+    String? category,
+    String? image}) {
+    _id = id;
+    _title = title;
+    _price = price;
+    _description = description;
+    _category = category;
+    _image = image;
+  }
 
-  factory Product.fromJson(Map<String,dynamic>json)
-  {
-    return Product(
-      id: json["id"],
-      category: json["category"].toString(),
-      price: json["price"],
-      description: json["description"].toString(),
-      imageUrl: json["image"].toString(),
-      title: json["title"].toString(),
-    );
+  Product.fromJson(dynamic json) {
+    _id = json['id'];
+    _title = json['title'];
+    _price = json['price'] !=null ? json['price'] is double ? json['price'] : json['price'] is String ?
+    double.parse(json['price']):json['price'].toDouble() : '';
+    _description = json['description'];
+    _category = json['category'];
+    _image = json['image'];
   }
 
 }
-

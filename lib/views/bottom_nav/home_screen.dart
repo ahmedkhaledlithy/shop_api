@@ -1,5 +1,5 @@
 import 'package:dsc_shop/controllers/auth.dart';
-import 'package:dsc_shop/api/product_api.dart';
+import 'package:dsc_shop/controllers/product_api.dart';
 import 'package:dsc_shop/models/product.dart';
 import 'package:dsc_shop/views/login_screen/login.dart';
 import 'package:flutter/material.dart';
@@ -14,53 +14,30 @@ class HomeScreen extends StatefulWidget {
 }
 
 class _HomeScreenState extends State<HomeScreen> {
-  ProductsApi api = ProductsApi();
+ // ProductsApi api = ProductsApi();
+
+  @override
+  void initState() {
+    WidgetsBinding.instance!.addPostFrameCallback((_){
+      Provider.of<ProductsApi>(context, listen: false).fetchAllProducts();
+    });
+    super.initState();
+  }
 
   @override
   Widget build(BuildContext context) {
+    List<Product> products = Provider.of<ProductsApi>(context).productsList;
     return Scaffold(
-      body: FutureBuilder(
-        future: api.fetchAllProducts(),
-        builder: (context, AsyncSnapshot<List<Product>> snapshot) {
-          switch (snapshot.connectionState) {
-            case ConnectionState.active:
-              Center(child: CircularProgressIndicator());
-              break;
+      body: ListView.builder(
+          cacheExtent: 9999,
+          itemCount: products.length > 0 ? products.length : 0,
+          itemBuilder: (context, index) {
+            final Product currentProduct = products[index];
 
-            case ConnectionState.waiting:
-              Center(child: CircularProgressIndicator());
-              break;
-
-            case ConnectionState.none:
-              Text("No Connection");
-              break;
-
-            case ConnectionState.done:
-              if (snapshot.hasError) {
-                 Text(snapshot.error.toString());
-                break;
-              } else {
-                List<Product>? products = snapshot.data;
-
-                return Container(
-                  height: MediaQuery.of(context).size.height,
-                  width: MediaQuery.of(context).size.width,
-                  child: ListView.builder(
-                      cacheExtent: 9999,
-                      itemCount: products!.length > 0 ? products.length : 0,
-                      itemBuilder: (context, index) {
-                        final Product currentProduct = products[index];
-
-                        return _drawSingleCard(currentProduct);
-                      }),
-                );
-              }
-
+            return _drawSingleCard(currentProduct);
           }
-          return Container();
+          ),
 
-        },
-      ),
     );
   }
 
@@ -75,7 +52,7 @@ class _HomeScreenState extends State<HomeScreen> {
           children: <Widget>[
             SizedBox(
               child: Image.network(
-                product.imageUrl,
+                product.image!,
                 fit: BoxFit.cover,
               ),
               width: 120,
@@ -88,7 +65,7 @@ class _HomeScreenState extends State<HomeScreen> {
               child: Column(
                 children: <Widget>[
                   Text(
-                    product.title,
+                    product.title!,
                     maxLines: 2,
                     style: TextStyle(fontSize: 18, fontWeight: FontWeight.w600),
                   ),
@@ -96,7 +73,7 @@ class _HomeScreenState extends State<HomeScreen> {
                     height: 18,
                   ),
                 
-                      Text(product.description),
+                      Text(product.description!),
                   
                 ],
               ),
