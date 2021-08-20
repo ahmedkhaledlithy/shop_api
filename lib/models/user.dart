@@ -2,23 +2,23 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 
 class Users {
   String id;
-  String username;
+  String? username;
   String? password;
-  String fullName;
+  String? fullName;
   String? address;
   String? phone;
   String? gender;
-  String image;
+  String? image;
 
   Users(
       {required this.id,
-      required this.username,
+       this.username,
                this.password,
-      required this.fullName,
+       this.fullName,
        this.address,
        this.phone,
        this.gender,
-      required this.image});
+       this.image});
 
   List<Users> fromQuery(QuerySnapshot snapshot) {
     return snapshot.docs.map((doc) {

@@ -1,0 +1,8 @@
+{
+  "login": "LOGIN",
+  "user_name": "UserName",
+  "password": "Password",
+  "forget_ms": "Forger Password ?",
+  "remember_ms": "Remember Me",
+  "change_language" : "English"
+}

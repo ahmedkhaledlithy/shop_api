@@ -112,11 +112,12 @@ Future<void> saveUser({required String fullName,required String password,require
    ));
  }
 
+
+
+
  Future<void> resetPassword(String username)async{
    await _auth.sendPasswordResetEmail(email: username.trim());
  }
-
-
 
   currentUser() {
     User? user = _auth.currentUser;

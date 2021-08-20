@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 
 const Color primaryColor = Colors.indigo;
 final Color primary200Color = Colors.indigo[200]!;
+final Color primary50Color = Colors.indigo[50]!;
 const Color deepPurpleColor = Colors.deepPurpleAccent;
 const Color blackColor = Colors.black;
 const Color whiteColor = Colors.white;

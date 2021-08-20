@@ -1,13 +1,13 @@
 
 class Product {
-  num? _id;
+  int? _id;
   String? _title;
   double? _price;
   String? _description;
   String? _category;
   String? _image;
 
-  num? get id => _id;
+  int? get id => _id;
   String? get title => _title;
   double? get price => _price;
   String? get description => _description;
@@ -21,7 +21,8 @@ class Product {
     double? price,
     String? description,
     String? category,
-    String? image}) {
+    String? image,
+  }) {
     _id = id;
     _title = title;
     _price = price;

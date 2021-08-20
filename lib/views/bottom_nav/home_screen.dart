@@ -1,98 +1,163 @@
-import 'package:dsc_shop/controllers/auth.dart';
+import 'package:dsc_shop/controllers/cart.dart';
+import 'package:dsc_shop/controllers/favourite.dart';
 import 'package:dsc_shop/controllers/product_api.dart';
 import 'package:dsc_shop/models/product.dart';
-import 'package:dsc_shop/views/login_screen/login.dart';
+import 'package:dsc_shop/shared/app_bar.dart';
+import 'package:dsc_shop/shared/colors.dart';
+import 'package:dsc_shop/shared/drawer.dart';
+import 'package:dsc_shop/views/details/details_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
-import 'package:shared_preferences/shared_preferences.dart';
 
 class HomeScreen extends StatefulWidget {
-  const HomeScreen({Key? key}) : super(key: key);
-
   @override
   _HomeScreenState createState() => _HomeScreenState();
 }
 
 class _HomeScreenState extends State<HomeScreen> {
- // ProductsApi api = ProductsApi();
+  final bool isSearching = false;
+  late List<Product> allProduct;
+  late List<Product> searchedProduct;
+  final _searchTextController = TextEditingController();
 
   @override
-  void initState() {
-    WidgetsBinding.instance!.addPostFrameCallback((_){
-      Provider.of<ProductsApi>(context, listen: false).fetchAllProducts();
-    });
-    super.initState();
+  void dispose() {
+    _searchTextController.dispose();
+    super.dispose();
   }
 
   @override
   Widget build(BuildContext context) {
-    List<Product> products = Provider.of<ProductsApi>(context).productsList;
     return Scaffold(
-      body: ListView.builder(
-          cacheExtent: 9999,
-          itemCount: products.length > 0 ? products.length : 0,
-          itemBuilder: (context, index) {
-            final Product currentProduct = products[index];
+      appBar: AppBarWidget(),
+      drawer: DrawerWidget(),
+      body: FutureBuilder<List<Product>>(
+          future:
+              Provider.of<ProductsApi>(context, listen: false).fetchAllProducts(),
+          builder: (context, AsyncSnapshot<List<Product>> snapshot) {
+            if (snapshot.hasData) {
+              return GridView.builder(
+                cacheExtent: 9999,
+                itemCount: snapshot.data!.length,
+                itemBuilder: (context, index) {
+                  final Product currentProduct = snapshot.data![index];
 
-            return _drawSingleCard(currentProduct);
-          }
-          ),
+                  return _drawSingleCard(currentProduct, context);
+                },
+                gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
+                  crossAxisCount: 2,
+                  crossAxisSpacing: 3.0,
+                ),
+              );
+            }
 
+            return Center(child: CircularProgressIndicator());
+          }),
     );
   }
 
-  Widget _drawSingleCard(Product product) {
-    return GestureDetector(
-      onTap: (){
-       
-      },
-      child: Padding(
-        padding: const EdgeInsets.all(10),
-        child: Row(
-          children: <Widget>[
-            SizedBox(
-              child: Image.network(
-                product.image!,
-                fit: BoxFit.cover,
+  Widget _drawSingleCard(Product product, BuildContext context) {
+    bool isInCart = Provider.of<CartModel>(context).items.contains(product);
+    final bool alreadyFav =Provider.of<FavouriteModel>(context).favourites.contains(product);
+    double height = MediaQuery.of(context).size.height;
+    double width = MediaQuery.of(context).size.width;
+
+    // return GestureDetector(
+    //   child: Padding(
+    //     padding: const EdgeInsets.all(10),
+    //     child: Row(
+    //       children: <Widget>[
+    //         SizedBox(
+    //           child: Image.network(
+    //             product.image!,
+    //             fit: BoxFit.cover,
+    //           ),
+    //           width: 120,
+    //           height: 120,
+    //         ),
+    //         SizedBox(
+    //           width: 16,
+    //         ),
+    //         Expanded(
+    //           child: Column(
+    //             children: <Widget>[
+    //               Text(
+    //                 product.title!,
+    //                 maxLines: 2,
+    //                 style: TextStyle(fontSize: 18, fontWeight: FontWeight.w600),
+    //               ),
+    //               SizedBox(
+    //                 height: 18,
+    //               ),
+    //
+    //                   Text(product.description!),
+    //
+    //              Row(
+    //                children: [
+
+    //                ],
+    //              ),
+    //
+    //             ],
+    //           ),
+    //         ),
+    //       ],
+    //     ),
+    //   ),
+    // );
+
+    return Padding(
+      padding: const EdgeInsets.all(10),
+      child: GestureDetector(
+        onTap: (){
+          Navigator.push(context, MaterialPageRoute(builder: (context)=>DetailsScreen(product: product)));
+        },
+        child: Container(
+          height: height * .3,
+          width: width * .5,
+          decoration: BoxDecoration(
+              borderRadius: BorderRadius.all(Radius.circular(20)),
+              border: Border.all(color: primaryColor)),
+          child: Column(
+            mainAxisAlignment: MainAxisAlignment.center,
+            crossAxisAlignment: CrossAxisAlignment.center,
+            children: [
+              Expanded(child: Image.network(product.image!, fit: BoxFit.fill)),
+              SizedBox(
+                height: height * .02,
               ),
-              width: 120,
-              height: 120,
-            ),
-            SizedBox(
-              width: 16,
-            ),
-            Expanded(
-              child: Column(
-                children: <Widget>[
-                  Text(
-                    product.title!,
-                    maxLines: 2,
-                    style: TextStyle(fontSize: 18, fontWeight: FontWeight.w600),
-                  ),
-                  SizedBox(
-                    height: 18,
-                  ),
-                
-                      Text(product.description!),
-                  
+              Text(product.title!, maxLines: 1),
+              Text(
+                product.price.toString(),
+                style: TextStyle(fontWeight: FontWeight.bold),
+              ),
+              Row(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: [
+                  IconButton(onPressed: isInCart
+                      ? null
+                      : () {
+                    context.read<CartModel>().add(product);
+                  }, icon:  isInCart
+                      ? const Icon(Icons.check, semanticLabel: 'ADDED')
+                      :const Icon(Icons.add_shopping_cart)),
+
+                  IconButton(onPressed:  () {
+                    if (alreadyFav) {
+                      context.read<FavouriteModel>().removeFav(product.id!);
+                    } else {
+                      context.read<FavouriteModel>().addFav(product);
+                    }
+                  }, icon: alreadyFav?const Icon(Icons.favorite,color: redColor,)
+                      :const Icon(Icons.favorite_border)),
                 ],
               ),
-            ),
-          ],
+            ],
+          ),
         ),
       ),
     );
   }
-  
-  void logOut(
-    BuildContext context,
-  ) async {
-    final authProvider = Provider.of<AuthProvider>(context, listen: false);
 
-    SharedPreferences preferences = await SharedPreferences.getInstance();
-    preferences.remove("KeepMeLoggedIn");
-    await authProvider.logout();
-    Navigator.pushReplacement(
-        context, MaterialPageRoute(builder: (context) => LoginScreen()));
-  }
+
 }

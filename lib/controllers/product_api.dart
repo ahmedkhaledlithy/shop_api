@@ -8,12 +8,9 @@ class ProductsApi extends ChangeNotifier{
   List<Product>productsList=[];
   Future<List<Product>>fetchAllProducts() async {
 
-
     http.Response futureProducts = await http.get(Uri.parse("https://fakestoreapi.com/products"));
-
     if (futureProducts.statusCode == 200) {
       var jsonData = jsonDecode(futureProducts.body);
-
 
       for (var item in jsonData) {
         productsList.add(Product.fromJson(item));
@@ -28,3 +25,6 @@ class ProductsApi extends ChangeNotifier{
 
 
 }
+
+
+

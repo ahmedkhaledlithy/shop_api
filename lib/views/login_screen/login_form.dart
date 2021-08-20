@@ -1,5 +1,6 @@
 import 'package:dsc_shop/controllers/auth.dart';
 import 'package:dsc_shop/controllers/progress.dart';
+import 'package:dsc_shop/localization_delegate.dart';
 import 'package:dsc_shop/shared/colors.dart';
 import 'package:dsc_shop/shared/custom_textformfield.dart';
 import 'package:dsc_shop/views/bottom_nav/bottom_navigation.dart';
@@ -41,7 +42,7 @@ class _LoginFormWidgetState extends State<LoginFormWidget> {
         children: [
           Padding(
             padding: EdgeInsets.only(top: 20),
-            child: Text("LOGIN",
+            child: Text(AppLocalization.of(context).getTranslated("login")!,
               style: TextStyle(
                 fontSize: 32,
                 color: primaryColor,
@@ -62,7 +63,7 @@ class _LoginFormWidgetState extends State<LoginFormWidget> {
                   CustomTextForm(
 
                     keyboardType: TextInputType.emailAddress,
-                    label: "UserName",
+                    label: AppLocalization.of(context).getTranslated("user_name")!,
                     controller: widget.controller1,
                     prefixIcon: Icon(
                       Icons.email_outlined,
@@ -86,7 +87,7 @@ class _LoginFormWidgetState extends State<LoginFormWidget> {
                   ),
                   CustomTextForm(
                     keyboardType:TextInputType.visiblePassword,
-                    label: "Password",
+                    label: AppLocalization.of(context).getTranslated("password")!,
                     controller:widget.controller2,
                     prefixStyle: TextStyle(
                       color: whiteColor,
@@ -156,7 +157,7 @@ class _LoginFormWidgetState extends State<LoginFormWidget> {
                               keepMeLoggedIn = value!;
                             });
                           }),
-                      Text("Remember Me",
+                      Text(AppLocalization.of(context).getTranslated("remember_ms")!,
                         style: TextStyle(color: blackColor, fontSize: 16),
                       ),
                     ],
@@ -182,7 +183,7 @@ class _LoginFormWidgetState extends State<LoginFormWidget> {
                                 ),
                               ),
                             ),
-                            child: Text("LOGIN",
+                            child: Text(AppLocalization.of(context).getTranslated("login")!,
                               style: TextStyle(
                                 color: whiteColor,
                                 fontWeight: FontWeight.bold,

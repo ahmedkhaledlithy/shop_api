@@ -23,7 +23,10 @@ class _SplashScreenState extends State<SplashScreen> {
       _isLogged = (pref.getBool('KeepMeLoggedIn') ?? false);
     }
 
+
   }
+
+
 
 
   @override
@@ -36,10 +39,10 @@ class _SplashScreenState extends State<SplashScreen> {
   @override
   Widget build(BuildContext context) {
     return SplashScreenView(
-      navigateRoute: _isLogged==true?BottomNavigation():LoginScreen(),
+      navigateRoute: _isLogged?BottomNavigation():LoginScreen(),
       duration: 3000,
       imageSize: 130,
-      imageSrc: "assets/splashScreen.png",
+      imageSrc: "assets/splashScr.png",
       text: "DSC Shop",
       textType: TextType.TyperAnimatedText,
       textStyle: TextStyle(

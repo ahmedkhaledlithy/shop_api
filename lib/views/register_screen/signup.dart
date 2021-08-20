@@ -61,10 +61,7 @@ class _SignUpScreenState extends State<SignUpScreen> {
                               borderRadius: BorderRadius.circular(17),
                             ),
                             elevation: 8,
-                            child: Image(
-                              image:
-                              NetworkImage("https://images.pexels.com/photos/3727255/pexels-photo-3727255.jpeg?auto=compress&cs=tinysrgb&h=750&w=1260"),
-
+                            child:Image.asset("assets/logo1.png",
                               fit: BoxFit.cover,
                               width: 80,
                               height: 80,

@@ -440,14 +440,10 @@ class _RegisterFormState extends State<RegisterForm> {
           image = File(value.path);
         } else {
           print('No image selected.');
-          ScaffoldMessenger.of(context)
-              .showSnackBar(SnackBar(content: Text("Please select Your Image")));
+          ScaffoldMessenger.of(context).showSnackBar(SnackBar(content: Text("Please select Your Image")));
         }
       });
     });
-
-
-
   }
 
   Future<String?> uploadImage(File image) async {
