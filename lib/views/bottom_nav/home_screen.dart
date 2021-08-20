@@ -1,4 +1,5 @@
 import 'package:dsc_shop/controllers/cart.dart';
+import 'package:dsc_shop/controllers/favourite.dart';
 import 'package:dsc_shop/controllers/product_api.dart';
 import 'package:dsc_shop/models/product.dart';
 import 'package:dsc_shop/shared/app_bar.dart';
@@ -14,96 +15,44 @@ class HomeScreen extends StatefulWidget {
 }
 
 class _HomeScreenState extends State<HomeScreen> {
-  final bool isSearching = false;
-  late List<Product> allProduct;
-  late List<Product> searchedProduct;
-  final _searchTextController = TextEditingController();
 
   @override
-  void dispose() {
-    _searchTextController.dispose();
-    super.dispose();
+  void initState() {
+    WidgetsBinding.instance!.addPostFrameCallback((_){
+      Provider.of<ProductsApi>(context, listen: false).fetchAllProducts();
+    });
+    super.initState();
   }
 
   @override
   Widget build(BuildContext context) {
+    List<Product> products = Provider.of<ProductsApi>(context).productsList;
+
     return Scaffold(
       appBar: AppBarWidget(),
       drawer: DrawerWidget(),
-      body: FutureBuilder<List<Product>>(
-          future:
-              Provider.of<ProductsApi>(context, listen: false).fetchAllProducts(),
-          builder: (context, AsyncSnapshot<List<Product>> snapshot) {
-            if (snapshot.hasData) {
-              return GridView.builder(
-                cacheExtent: 9999,
-                itemCount: snapshot.data!.length,
-                itemBuilder: (context, index) {
-                  final Product currentProduct = snapshot.data![index];
+      body: GridView.builder(
+        cacheExtent: 9999,
+        itemCount: products.length,
+        itemBuilder: (context, index) {
+          final Product currentProduct = products[index];
 
-                  return _drawSingleCard(currentProduct, context);
-                },
-                gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
-                  crossAxisCount: 2,
-                  crossAxisSpacing: 3.0,
-                ),
-              );
-            }
-
-            return Center(child: CircularProgressIndicator());
-          }),
+          return _drawSingleCard(currentProduct, context);
+        },
+        gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
+          crossAxisCount: 2,
+          crossAxisSpacing: 3.0,
+        ),
+      ),
     );
   }
 
   Widget _drawSingleCard(Product product, BuildContext context) {
     bool isInCart = Provider.of<CartModel>(context).items.contains(product);
-   // final bool alreadyFav =Provider.of<FavouriteModel>(context).favourites.contains(product);
+    bool alreadyFav =Provider.of<FavouriteModel>(context).favourites.contains(product);
     double height = MediaQuery.of(context).size.height;
     double width = MediaQuery.of(context).size.width;
 
-    // return GestureDetector(
-    //   child: Padding(
-    //     padding: const EdgeInsets.all(10),
-    //     child: Row(
-    //       children: <Widget>[
-    //         SizedBox(
-    //           child: Image.network(
-    //             product.image!,
-    //             fit: BoxFit.cover,
-    //           ),
-    //           width: 120,
-    //           height: 120,
-    //         ),
-    //         SizedBox(
-    //           width: 16,
-    //         ),
-    //         Expanded(
-    //           child: Column(
-    //             children: <Widget>[
-    //               Text(
-    //                 product.title!,
-    //                 maxLines: 2,
-    //                 style: TextStyle(fontSize: 18, fontWeight: FontWeight.w600),
-    //               ),
-    //               SizedBox(
-    //                 height: 18,
-    //               ),
-    //
-    //                   Text(product.description!),
-    //
-    //              Row(
-    //                children: [
-
-    //                ],
-    //              ),
-    //
-    //             ],
-    //           ),
-    //         ),
-    //       ],
-    //     ),
-    //   ),
-    // );
 
     return Padding(
       padding: const EdgeInsets.all(10),
@@ -141,14 +90,14 @@ class _HomeScreenState extends State<HomeScreen> {
                       ? const Icon(Icons.check, semanticLabel: 'ADDED')
                       :const Icon(Icons.add_shopping_cart)),
 
-                  // IconButton(onPressed:  () {
-                  //   if (alreadyFav) {
-                  //     context.read<FavouriteModel>().removeFav(product.id!);
-                  //   } else {
-                  //     context.read<FavouriteModel>().addFav(product);
-                  //   }
-                  // }, icon: alreadyFav?const Icon(Icons.favorite,color: redColor,)
-                  //     :const Icon(Icons.favorite_border)),
+                  IconButton(onPressed:  () {
+                    if (alreadyFav) {
+                      context.read<FavouriteModel>().removeFav(product.id!);
+                    } else {
+                      context.read<FavouriteModel>().addFav(product);
+                    }
+                  }, icon: alreadyFav?const Icon(Icons.favorite,color: redColor,)
+                      :const Icon(Icons.favorite_border)),
                 ],
               ),
             ],

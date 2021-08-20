@@ -1,8 +1,12 @@
-import 'package:dsc_shop/models/product.dart';
+import 'package:dsc_shop/controllers/product_api.dart';
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 import 'colors.dart';
 
 class AppBarWidget extends StatefulWidget implements PreferredSizeWidget {
+
+
+
   const AppBarWidget({Key? key}) : super(key: key);
 
   @override
@@ -15,19 +19,9 @@ class AppBarWidget extends StatefulWidget implements PreferredSizeWidget {
 
 class _AppBarWidgetState extends State<AppBarWidget> {
   bool _isSearching = false;
-  late List<Product> allProduct;
-  late List<Product> searchedProduct;
   final _searchTextController = TextEditingController();
 
 
-
-  void addSearchedFOrItemsToSearchedList(String searchedProducts) {
-    searchedProduct = allProduct
-        .where((product) =>
-        product.title!.toLowerCase().startsWith(searchedProducts))
-        .toList();
-    setState(() {});
-  }
 
   List<Widget> _buildAppBarActions() {
     if (_isSearching) {
@@ -64,16 +58,12 @@ class _AppBarWidgetState extends State<AppBarWidget> {
       ),
       style: TextStyle(color: primaryColor, fontSize: 18),
       onChanged: (searchedProducts) {
-        addSearchedFOrItemsToSearchedList(searchedProducts);
+        Provider.of<ProductsApi>(context, listen: false).changeSearchString(searchedProducts);
+       // addSearchedFOrItemsToSearchedList(searchedProducts);
       },
     );
   }
-  Widget _buildAppBarTitle() {
-    return Text(
-      'Characters',
-      style: TextStyle(color: primaryColor),
-    );
-  }
+
 
   void _startSearch() {
     ModalRoute.of(context)!.addLocalHistoryEntry(LocalHistoryEntry(onRemove: _stopSearching));
@@ -103,7 +93,6 @@ class _AppBarWidgetState extends State<AppBarWidget> {
       title: _isSearching ? _buildSearchField() : Text("DSC Shop",
         style: TextStyle(
             fontSize: 25, fontWeight: FontWeight.bold, color: primaryColor),),
-      // decoration: InputDecoration(hintText: "Search ...", hintStyle: TextStyle(color: primaryColor)),style: TextStyle(color: Colors.white,fontSize: 20),
       centerTitle: true,
       actions: _buildAppBarActions(),
       backgroundColor: Colors.transparent,

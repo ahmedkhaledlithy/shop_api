@@ -33,7 +33,7 @@ class CartScreen extends StatelessWidget {
                 padding: const EdgeInsets.all(10),
                 child: GestureDetector(
                   onTap: (){
-                   Navigator.push(context, MaterialPageRoute(builder: (context)=>DetailsScreen(product: cart.items[index])));
+                   Navigator.push(context, MaterialPageRoute(builder: (context)=>DetailsScreen(product: cart.items[index],)));
                   },
 
                   child: Container(

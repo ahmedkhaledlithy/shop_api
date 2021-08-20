@@ -1,22 +1,30 @@
+import 'package:dsc_shop/controllers/favourite.dart';
 import 'package:dsc_shop/models/product.dart';
 import 'package:dsc_shop/shared/colors.dart';
 import 'package:dsc_shop/shared/image_widget.dart';
 import 'package:dsc_shop/views/details/details_content.dart';
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 
-class DetailsScreen extends StatelessWidget {
+class DetailsScreen extends StatefulWidget {
   final Product product;
 
-
-  const DetailsScreen({Key? key, required this.product,}) : super(key: key);
+   DetailsScreen({Key? key, required this.product,}) : super(key: key);
 
   static final GlobalKey<ScaffoldMessengerState> _scaffoldKey =
       GlobalKey<ScaffoldMessengerState>();
 
   @override
+  _DetailsScreenState createState() => _DetailsScreenState();
+}
+
+class _DetailsScreenState extends State<DetailsScreen> {
+  @override
   Widget build(BuildContext context) {
     double screenHeight = MediaQuery.of(context).size.height;
     double screenWidth = MediaQuery.of(context).size.width;
+    final bool alreadyFav =Provider.of<FavouriteModel>(context).favourites.contains(widget.product);
+
     return Container(
       color: whiteColor,
       child: SafeArea(
@@ -25,9 +33,9 @@ class DetailsScreen extends StatelessWidget {
             ImageWidget(
                 screenHeight: screenHeight * 0.8,
                 screenWidth: screenWidth,
-                url: product.image!),
+                url: widget.product.image!),
             Scaffold(
-              key: _scaffoldKey,
+              key: DetailsScreen._scaffoldKey,
               backgroundColor: transparent,
               appBar: AppBar(
                 title: Text(
@@ -60,7 +68,7 @@ class DetailsScreen extends StatelessWidget {
                           topRight: Radius.circular(35),
                         ),
                       ),
-                      child: DetailsContent(product: product,),
+                      child: DetailsContent(product: widget.product,),
                     ),
                   ),
                 ],
@@ -74,9 +82,18 @@ class DetailsScreen extends StatelessWidget {
                 minWidth: 25,
                 color: whiteColor,
                 onPressed: () {
-
+                  if (alreadyFav) {
+                    context.read<FavouriteModel>().removeFav(widget.product.id!);
+                  } else {
+                    context.read<FavouriteModel>().addFav(widget.product);
+                  }
                 },
-                child:const Icon(
+                child:alreadyFav
+                    ?const Icon(
+                  Icons.favorite,
+                  color: redAccentColor,
+                  size: 30,
+                ) :const Icon(
                         Icons.favorite_border_outlined,
                         color: redAccentColor,
                         size: 30,
@@ -90,6 +107,4 @@ class DetailsScreen extends StatelessWidget {
       ),
     );
   }
-
-
 }

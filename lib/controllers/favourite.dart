@@ -4,20 +4,20 @@ import 'package:flutter/material.dart';
 
 class FavouriteModel extends ChangeNotifier {
 
-  // final List<Product> _favourites = [];
-  //
-  // UnmodifiableListView<Product> get favourites => UnmodifiableListView(_favourites);
-  //
-  //
-  // void addFav(Product fav) {
-  //   _favourites.add(fav);
-  //   notifyListeners();
-  // }
-  //
-  // void removeFav(int id) {
-  //   _favourites.removeWhere((element) => element.id == id);
-  //   notifyListeners();
-  // }
+  final List<Product> _favourites = [];
+
+  UnmodifiableListView<Product> get favourites => UnmodifiableListView(_favourites);
+
+
+  void addFav(Product fav) {
+    _favourites.add(fav);
+    notifyListeners();
+  }
+
+  void removeFav(int id) {
+    _favourites.removeWhere((element) => element.id == id);
+    notifyListeners();
+  }
 
 
 
