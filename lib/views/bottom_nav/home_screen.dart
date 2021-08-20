@@ -1,5 +1,4 @@
 import 'package:dsc_shop/controllers/cart.dart';
-import 'package:dsc_shop/controllers/favourite.dart';
 import 'package:dsc_shop/controllers/product_api.dart';
 import 'package:dsc_shop/models/product.dart';
 import 'package:dsc_shop/shared/app_bar.dart';
@@ -58,7 +57,7 @@ class _HomeScreenState extends State<HomeScreen> {
 
   Widget _drawSingleCard(Product product, BuildContext context) {
     bool isInCart = Provider.of<CartModel>(context).items.contains(product);
-    final bool alreadyFav =Provider.of<FavouriteModel>(context).favourites.contains(product);
+   // final bool alreadyFav =Provider.of<FavouriteModel>(context).favourites.contains(product);
     double height = MediaQuery.of(context).size.height;
     double width = MediaQuery.of(context).size.width;
 
@@ -142,14 +141,14 @@ class _HomeScreenState extends State<HomeScreen> {
                       ? const Icon(Icons.check, semanticLabel: 'ADDED')
                       :const Icon(Icons.add_shopping_cart)),
 
-                  IconButton(onPressed:  () {
-                    if (alreadyFav) {
-                      context.read<FavouriteModel>().removeFav(product.id!);
-                    } else {
-                      context.read<FavouriteModel>().addFav(product);
-                    }
-                  }, icon: alreadyFav?const Icon(Icons.favorite,color: redColor,)
-                      :const Icon(Icons.favorite_border)),
+                  // IconButton(onPressed:  () {
+                  //   if (alreadyFav) {
+                  //     context.read<FavouriteModel>().removeFav(product.id!);
+                  //   } else {
+                  //     context.read<FavouriteModel>().addFav(product);
+                  //   }
+                  // }, icon: alreadyFav?const Icon(Icons.favorite,color: redColor,)
+                  //     :const Icon(Icons.favorite_border)),
                 ],
               ),
             ],
