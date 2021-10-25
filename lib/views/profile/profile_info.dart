@@ -1,7 +1,6 @@
-
 import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:dsc_shop/controllers/firestore.dart';
 import 'package:dsc_shop/models/user.dart';
+import 'package:dsc_shop/services/firestore.dart';
 import 'package:dsc_shop/shared/colors.dart';
 import 'package:dsc_shop/shared/style.dart';
 import 'package:dsc_shop/views/profile/edit_info.dart';
@@ -22,12 +21,13 @@ class _ProfileInfoState extends State<ProfileInfo> {
 
   static final _formKey = GlobalKey<FormState>();
   String id=FirebaseAuth.instance.currentUser!.uid;
+  String providerId = FirebaseAuth.instance.currentUser!.providerData[0].providerId;
 
  void passData(){
     DataBase().userData(Users(id: id)).then((value){
      nameController.text=value["fullName"];
-     phoneController.text=value["phone"];
-     addressController.text=value["address"];
+      phoneController.text=value["phone"]!=null?value["phone"]:"";
+      addressController.text=value["address"]!=null?value["address"]:"";
     });
   }
 
@@ -106,10 +106,9 @@ class _ProfileInfoState extends State<ProfileInfo> {
                         },
                       ),
 
-                      //  providerId=="facebook.com"||providerId=="google.com"? Container():
-                      EditInfo(
+                        providerId=="google.com"? Container(): EditInfo(
                         titleInfo: "Address",
-                        dataInfo: data["address"],
+                        dataInfo: data["address"]== null ?"Address":data["address"],
                         onTap: () {
                           updateInfo(
                             context: context,
@@ -130,11 +129,9 @@ class _ProfileInfoState extends State<ProfileInfo> {
                           );
                         },
                       ),
-                      //  providerId=="facebook.com"||providerId=="google.com"? Container():
-
-                      EditInfo(
+                      providerId=="google.com"? Container(): EditInfo(
                         titleInfo: "Phone",
-                        dataInfo: data["phone"],
+                        dataInfo: data["phone"]==null ? "Phone": data["phone"],
                         onTap: () {
                           updateInfo(
                             context: context,

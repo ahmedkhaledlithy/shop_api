@@ -1,5 +1,5 @@
-import 'package:dsc_shop/controllers/auth.dart';
-import 'package:dsc_shop/controllers/progress.dart';
+import 'package:dsc_shop/services/auth.dart';
+import 'package:dsc_shop/services/progress.dart';
 import 'package:dsc_shop/localization_delegate.dart';
 import 'package:dsc_shop/shared/colors.dart';
 import 'package:dsc_shop/shared/custom_textformfield.dart';

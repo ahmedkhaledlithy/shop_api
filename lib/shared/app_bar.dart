@@ -1,4 +1,4 @@
-import 'package:dsc_shop/controllers/product_api.dart';
+import 'package:dsc_shop/view_models/products_view_model.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'colors.dart';
@@ -58,8 +58,8 @@ class _AppBarWidgetState extends State<AppBarWidget> {
       ),
       style: TextStyle(color: primaryColor, fontSize: 18),
       onChanged: (searchedProducts) {
-        Provider.of<ProductsApi>(context, listen: false).changeSearchString(searchedProducts);
-       // addSearchedFOrItemsToSearchedList(searchedProducts);
+        Provider.of<ProductsViewModel>(context,listen: false).changeSearchString(searchedProducts);
+
       },
     );
   }

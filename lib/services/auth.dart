@@ -1,4 +1,4 @@
-import 'package:dsc_shop/controllers/firestore.dart';
+import 'package:dsc_shop/services/firestore.dart';
 import 'package:dsc_shop/models/user.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';

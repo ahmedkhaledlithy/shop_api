@@ -1,17 +1,17 @@
 import 'package:dsc_shop/constants_languages.dart';
-import 'package:dsc_shop/controllers/cart.dart';
-import 'package:dsc_shop/controllers/favourite.dart';
-import 'package:dsc_shop/controllers/product_api.dart';
-import 'package:dsc_shop/controllers/bottom_nav_provider.dart';
-import 'package:dsc_shop/controllers/progress.dart';
-import 'package:dsc_shop/controllers/theme.dart';
 import 'package:dsc_shop/localization_delegate.dart';
+import 'package:dsc_shop/services/auth.dart';
+import 'package:dsc_shop/services/bottom_nav_provider.dart';
+import 'package:dsc_shop/services/cart.dart';
+import 'package:dsc_shop/services/favourite.dart';
+import 'package:dsc_shop/services/progress.dart';
+import 'package:dsc_shop/services/theme.dart';
+import 'package:dsc_shop/view_models/products_view_model.dart';
 import 'package:dsc_shop/views/splash.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
 import 'package:provider/provider.dart';
-import 'package:dsc_shop/controllers/auth.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
@@ -20,7 +20,7 @@ void main() async {
     ChangeNotifierProvider(create: (BuildContext context)=>AuthProvider()),
     ChangeNotifierProvider(create: (BuildContext context)=>PrograssHud()),
     ChangeNotifierProvider(create: (BuildContext context)=>BottomProvider()),
-    ChangeNotifierProvider(create: (BuildContext context)=>ProductsApi()),
+    ChangeNotifierProvider(create: (BuildContext context)=>ProductsViewModel()),
     ChangeNotifierProvider(create: (BuildContext context)=>ThemeChanger(ThemeData.light())),
     ChangeNotifierProvider(create: (BuildContext context)=>CartModel()),
     ChangeNotifierProvider(create: (BuildContext context)=>FavouriteModel()),

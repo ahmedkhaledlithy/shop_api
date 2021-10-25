@@ -1,6 +1,6 @@
 import 'dart:io';
-import 'package:dsc_shop/controllers/auth.dart';
-import 'package:dsc_shop/controllers/progress.dart';
+import 'package:dsc_shop/services/auth.dart';
+import 'package:dsc_shop/services/progress.dart';
 import 'package:dsc_shop/shared/colors.dart';
 import 'package:dsc_shop/views/login_screen/login.dart';
 import 'package:dsc_shop/views/register_screen/signup.dart';

@@ -1,5 +1,5 @@
-import 'package:dsc_shop/controllers/favourite.dart';
 import 'package:dsc_shop/models/product.dart';
+import 'package:dsc_shop/services/favourite.dart';
 import 'package:dsc_shop/shared/colors.dart';
 import 'package:dsc_shop/shared/image_widget.dart';
 import 'package:dsc_shop/views/details/details_content.dart';

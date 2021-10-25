@@ -1,4 +1,4 @@
-import 'package:dsc_shop/controllers/cart.dart';
+import 'package:dsc_shop/services/cart.dart';
 import 'package:dsc_shop/shared/colors.dart';
 import 'package:dsc_shop/shared/drawer.dart';
 import 'package:dsc_shop/views/details/details_screen.dart';
