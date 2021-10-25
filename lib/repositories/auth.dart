@@ -1,5 +1,5 @@
-import 'package:dsc_shop/services/firestore.dart';
 import 'package:dsc_shop/models/user.dart';
+import 'package:dsc_shop/repositories/firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:google_sign_in/google_sign_in.dart';

@@ -1,8 +1,8 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:dsc_shop/constants_languages.dart';
-import 'package:dsc_shop/services/auth.dart';
-import 'package:dsc_shop/services/firestore.dart';
-import 'package:dsc_shop/services/theme.dart';
+import 'package:dsc_shop/repositories/auth.dart';
+import 'package:dsc_shop/repositories/firestore.dart';
+import 'package:dsc_shop/repositories/theme.dart';
 import 'package:dsc_shop/localization_delegate.dart';
 import 'package:dsc_shop/main.dart';
 import 'package:dsc_shop/models/language.dart';

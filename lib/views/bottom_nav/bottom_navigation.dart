@@ -1,4 +1,4 @@
-import 'package:dsc_shop/services/bottom_nav_provider.dart';
+import 'package:dsc_shop/repositories/bottom_nav_provider.dart';
 import 'package:dsc_shop/shared/custom_bottom_nav.dart';
 import 'package:dsc_shop/views/bottom_nav/cart_screen.dart';
 import 'package:dsc_shop/views/bottom_nav/fav_screen.dart';

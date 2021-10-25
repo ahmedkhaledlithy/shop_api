@@ -1,6 +1,6 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:dsc_shop/models/user.dart';
-import 'package:dsc_shop/services/firestore.dart';
+import 'package:dsc_shop/repositories/firestore.dart';
 import 'package:dsc_shop/shared/colors.dart';
 import 'package:dsc_shop/shared/style.dart';
 import 'package:dsc_shop/views/profile/edit_info.dart';

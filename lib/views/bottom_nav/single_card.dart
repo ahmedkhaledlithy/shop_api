@@ -1,6 +1,6 @@
 import 'package:dsc_shop/models/product.dart';
-import 'package:dsc_shop/services/cart.dart';
-import 'package:dsc_shop/services/favourite.dart';
+import 'package:dsc_shop/repositories/cart.dart';
+import 'package:dsc_shop/repositories/favourite.dart';
 import 'package:dsc_shop/shared/colors.dart';
 import 'package:dsc_shop/views/details/details_screen.dart';
 import 'package:flutter/material.dart';

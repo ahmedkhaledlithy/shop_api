@@ -1,5 +1,6 @@
-import 'package:dsc_shop/services/auth.dart';
-import 'package:dsc_shop/services/progress.dart';
+
+import 'package:dsc_shop/repositories/auth.dart';
+import 'package:dsc_shop/repositories/progress.dart';
 import 'package:dsc_shop/shared/colors.dart';
 import 'package:dsc_shop/shared/custom_textformfield.dart';
 import 'package:dsc_shop/shared/image_widget.dart';

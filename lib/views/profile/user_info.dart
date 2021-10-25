@@ -1,7 +1,7 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:dsc_shop/models/user.dart';
-import 'package:dsc_shop/services/auth.dart';
-import 'package:dsc_shop/services/firestore.dart';
+import 'package:dsc_shop/repositories/auth.dart';
+import 'package:dsc_shop/repositories/firestore.dart';
 import 'package:dsc_shop/shared/colors.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
