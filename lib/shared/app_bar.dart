@@ -12,23 +12,30 @@ class AppBarWidget extends StatefulWidget implements PreferredSizeWidget {
   @override
   _AppBarWidgetState createState() => _AppBarWidgetState();
 
+
   @override
   // TODO: implement preferredSize
   Size get preferredSize => Size.fromHeight(50.0);
 }
+
 
 class _AppBarWidgetState extends State<AppBarWidget> {
   bool _isSearching = false;
   final _searchTextController = TextEditingController();
 
 
+  @override
+  void dispose() {
+    super.dispose();
+    _searchTextController.dispose();
+  }
 
   List<Widget> _buildAppBarActions() {
     if (_isSearching) {
       return [
         IconButton(
           onPressed: () {
-            _clearSearch();
+            _stopSearching();
             Navigator.pop(context);
           },
           icon: Icon(Icons.clear, color: primaryColor),
